@@ -4,22 +4,22 @@ const {
   handleHttpError,
   handleErrorResponse,
 } = require("../helpers/handleError");
-const { matchedData } = require("express-validator");
+const { matchedData, body } = require("express-validator");
 
 const createHost = async (req = request, res = response) => {
   try {
     const body = matchedData(req);
-    let { ip, host } = body;
+    let { ip, hostname } = body;
 
     const verifyIp = await deviceModel.findOne({ ip });
-    const verifyHost = await deviceModel.findOne({ ip });
-    // if (verifyIp) {
-    //   return handleErrorResponse(
-    //     res,
-    //     "Ya existe un dispositivo con esa dirección IP, por favor cambiar la IP",
-    //     401
-    //   );
-    // }
+    const verifyHost = await deviceModel.findOne({ hostname });
+    if (verifyIp) {
+      return handleErrorResponse(
+        res,
+        "Ya existe un dispositivo con esa dirección IP, por favor cambiar la IP",
+        401
+      );
+    }
     if (verifyHost) {
       return handleErrorResponse(
         res,

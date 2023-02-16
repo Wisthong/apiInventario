@@ -6,7 +6,7 @@ const validatorDevice = [
     .exists()
     .notEmpty()
     .isLength({ min: 1 }),
-  check("host", "Debes ingresar el host")
+  check("hostname", "Debes ingresar el hostname")
     .exists()
     .notEmpty()
     .isLength({ min: 5 }),

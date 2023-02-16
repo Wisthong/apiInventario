@@ -5,6 +5,7 @@ const {
   handleErrorResponse,
 } = require("../helpers/handleError");
 const { matchedData, body } = require("express-validator");
+const { find } = require("../model/nosql/devices");
 
 const createHost = async (req = request, res = response) => {
   try {
@@ -29,15 +30,42 @@ const createHost = async (req = request, res = response) => {
     }
 
     const data = await deviceModel.create(body);
-    console.log(data);
     res.send({
       ok: true,
       message: "Registro de dispositivo exitoso",
     });
   } catch (error) {
-    console.log(error);
     handleHttpError(res, error);
   }
 };
 
-module.exports = { createHost };
+const getHosts = async (req = request, res = response) => {
+  try {
+    const data = await deviceModel.find();
+    res.send({
+      data,
+      ok: true,
+      message: "Has obtenido la lista de los dispositivos",
+    });
+  } catch (error) {
+    handleErrorResponse(res, error);
+  }
+};
+
+const getHost = async (req = request, res = response) => {
+  try {
+    req = matchedData(req);
+    const { id } = req;
+    const data = await deviceModel.findOne({ id });
+
+    res.send({
+      data,
+      ok: true,
+      message: "Has obtenido el dispositivo",
+    });
+  } catch (error) {
+    handleErrorResponse(res, error);
+  }
+};
+
+module.exports = { createHost, getHosts, getHost };

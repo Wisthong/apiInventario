@@ -8,7 +8,7 @@ const DeviceSchema = Schema(
     },
     hostname: {
       type: String,
-      // unique: true,
+      unique: true,
       required: true,
     },
     so: {
@@ -18,7 +18,7 @@ const DeviceSchema = Schema(
     ip: {
       type: String,
       required: true,
-      // unique: true,
+      unique: true,
     },
     antivirus: {
       type: String,

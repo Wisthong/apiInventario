@@ -1,6 +1,8 @@
 const { check } = require("express-validator");
 const { validateResult } = require("../helpers/handleValidator");
 
+//TODO: http://localhost:3001/api/devices
+
 const validatorDevice = [
   check("device", "Debes ingresar el nombre del dispositivo")
     .exists()
@@ -23,10 +25,10 @@ const validatorDevice = [
     .exists()
     .notEmpty()
     .isLength({ min: 5 }),
-  check("fecha_baja", "Debes ingresar la fecha de salida")
+  check("precio", "Debes ingresar el precio del dispositivo")
     .exists()
     .notEmpty()
-    .isLength({ min: 5 }),
+    .isNumeric(),
   check("licencias", "Debes ingresar las licencias del dispositivo")
     .exists()
     .notEmpty()
@@ -50,10 +52,7 @@ const validatorDevice = [
 ];
 
 const validatorGetDevice = [
-  check("id", "Debes ingresar un id valido")
-    .exists()
-    .notEmpty()
-    .isMongoId(),
+  check("id", "Debes ingresar un id valido").exists().notEmpty().isMongoId(),
   (req, res, next) => {
     validateResult(req, res, next);
   },

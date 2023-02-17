@@ -31,9 +31,12 @@ const DeviceSchema = Schema(
     fecha_baja: {
       type: String,
     },
+    precio: {
+      type: Number,
+    },
     estado: {
-      type: ["activo", "inactivo", "mantenimiento"],
-      default: ["activo"],
+      type: ["Activo", "Inactivo", "Mantenimiento"],
+      default: ["Activo"],
     },
     licencias: {
       type: String,

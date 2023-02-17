@@ -49,4 +49,14 @@ const validatorDevice = [
   },
 ];
 
-module.exports = { validatorDevice };
+const validatorGetDevice = [
+  check("id", "Debes ingresar el identificador del dispositivo")
+    .exists()
+    .notEmpty()
+    .isMongoId(),
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
+module.exports = { validatorDevice, validatorGetDevice };

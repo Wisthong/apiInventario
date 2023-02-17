@@ -4,8 +4,8 @@ const {
   handleHttpError,
   handleErrorResponse,
 } = require("../helpers/handleError");
-const { matchedData, body } = require("express-validator");
-const { find } = require("../model/nosql/devices");
+const { matchedData } = require("express-validator");
+const { signToken } = require("../helpers/handleJwt");
 
 const createHost = async (req = request, res = response) => {
   try {
@@ -41,10 +41,13 @@ const createHost = async (req = request, res = response) => {
 
 const getHosts = async (req = request, res = response) => {
   try {
+    const { user } = req;
+    const token = await signToken(user);
     const data = await deviceModel.find();
     res.send({
       data,
       ok: true,
+      token,
       message: "Has obtenido la lista de los dispositivos",
     });
   } catch (error) {
@@ -54,12 +57,22 @@ const getHosts = async (req = request, res = response) => {
 
 const getHost = async (req = request, res = response) => {
   try {
-    req = matchedData(req);
-    const { id } = req;
-    const data = await deviceModel.findOne({ id });
+    const { id } = matchedData(req);
+    const { user } = req;
+
+    const token = await signToken(user);
+    const data = await deviceModel.findOne({ _id: id });
+    if (!data) {
+      return handleErrorResponse(
+        res,
+        "No existe este id en nuestro sistema ",
+        401
+      );
+    }
 
     res.send({
       data,
+      token,
       ok: true,
       message: "Has obtenido el dispositivo",
     });
@@ -68,4 +81,26 @@ const getHost = async (req = request, res = response) => {
   }
 };
 
-module.exports = { createHost, getHosts, getHost };
+const deleteHost = async (req = request, res = response) => {
+  try {
+    const { id } = matchedData(req);
+    const { user } = req;
+
+    // const verifyExist = await deviceModel.findById()
+
+    const token = await signToken(user);
+
+    const data = await deviceModel.deleteOne({ _id: id });
+
+    res.send({
+      data,
+      token,
+      ok: true,
+      message: "Has eliminado el dispositivo",
+    });
+  } catch (error) {
+    handleErrorResponse(res, error);
+  }
+};
+
+module.exports = { createHost, getHosts, getHost, deleteHost };

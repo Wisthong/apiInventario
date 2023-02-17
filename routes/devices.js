@@ -1,14 +1,26 @@
 const { Router } = require("express");
-const { createHost, getHosts, getHost } = require("../controllers/devices");
-const { validatorDevice } = require("../validators/devices");
-// const { checkAuth } = require("../middlewares/authSesion");
+const {
+  createHost,
+  getHosts,
+  getHost,
+  deleteHost,
+} = require("../controllers/devices");
+const {
+  validatorDevice,
+  validatorGetDevice,
+} = require("../validators/devices");
+const { checkAuth } = require("../middlewares/authSesion");
 const router = Router();
 
-router.post("/", [validatorDevice], createHost);
+router.post("/", [checkAuth, validatorDevice], createHost);
 
-router.get("/", getHosts);
+router.put("/", [checkAuth, validatorDevice], createHost);
 
-router.get("/:id", getHost);
+router.get("/", [checkAuth], getHosts);
+
+router.get("/:id", [checkAuth, validatorGetDevice], getHost);
+
+router.delete("/:id", [checkAuth, validatorGetDevice], deleteHost);
 
 // router.post("/login", [validatorLogin], login);
 

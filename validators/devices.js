@@ -50,7 +50,7 @@ const validatorDevice = [
 ];
 
 const validatorGetDevice = [
-  check("id", "Debes ingresar el identificador del dispositivo")
+  check("id", "Debes ingresar un id valido")
     .exists()
     .notEmpty()
     .isMongoId(),

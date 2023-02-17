@@ -10,8 +10,10 @@ const { signToken } = require("../helpers/handleJwt");
 const createHost = async (req = request, res = response) => {
   try {
     const body = matchedData(req);
+    const { user } = req;
     let { ip, hostname } = body;
 
+    const token = await signToken(user);
     const verifyIp = await deviceModel.findOne({ ip });
     const verifyHost = await deviceModel.findOne({ hostname });
     if (verifyIp) {
@@ -31,6 +33,7 @@ const createHost = async (req = request, res = response) => {
 
     const data = await deviceModel.create(body);
     res.send({
+      token,
       ok: true,
       message: "Registro de dispositivo exitoso",
     });
@@ -41,13 +44,17 @@ const createHost = async (req = request, res = response) => {
 
 const getHosts = async (req = request, res = response) => {
   try {
-    const { user } = req;
-    const token = await signToken(user);
     const data = await deviceModel.find();
+    if (!data) {
+      return handleErrorResponse(
+        res,
+        "No se pudo obtener la lista de dispositivos",
+        401
+      );
+    }
     res.send({
       data,
       ok: true,
-      token,
       message: "Has obtenido la lista de los dispositivos",
     });
   } catch (error) {
@@ -58,9 +65,7 @@ const getHosts = async (req = request, res = response) => {
 const getHost = async (req = request, res = response) => {
   try {
     const { id } = matchedData(req);
-    const { user } = req;
 
-    const token = await signToken(user);
     const data = await deviceModel.findOne({ _id: id });
     if (!data) {
       return handleErrorResponse(
@@ -72,7 +77,6 @@ const getHost = async (req = request, res = response) => {
 
     res.send({
       data,
-      token,
       ok: true,
       message: "Has obtenido el dispositivo",
     });
@@ -86,21 +90,53 @@ const deleteHost = async (req = request, res = response) => {
     const { id } = matchedData(req);
     const { user } = req;
 
-    // const verifyExist = await deviceModel.findById()
-
     const token = await signToken(user);
+    const verifyHost = await deviceModel.findOne({ _id: id });
+    if (!verifyHost) {
+      return handleErrorResponse(
+        res,
+        "No existe este id en nuestro sistema ",
+        401
+      );
+    }
 
     const data = await deviceModel.deleteOne({ _id: id });
 
     res.send({
-      data,
       token,
       ok: true,
-      message: "Has eliminado el dispositivo",
+      message: "Has elimanado el dispositivo",
     });
   } catch (error) {
     handleErrorResponse(res, error);
   }
 };
 
-module.exports = { createHost, getHosts, getHost, deleteHost };
+const updateHost = async (req = request, res = response) => {
+  try {
+    const { id, ...body } = matchedData(req);
+    const { user } = req;
+    const token = await signToken(user);
+
+    const verifyHost = await deviceModel.findOne({ _id: id });
+    if (!verifyHost) {
+      return handleErrorResponse(
+        res,
+        "No existe este id en nuestro sistema ",
+        401
+      );
+    }
+
+    const data = await deviceModel.findByIdAndUpdate(id, body);
+
+    res.send({
+      token,
+      ok: true,
+      message: "Has actualizado el dispositivo",
+    });
+  } catch (error) {
+    handleErrorResponse(res, error);
+  }
+};
+
+module.exports = { createHost, getHosts, getHost, deleteHost, updateHost };

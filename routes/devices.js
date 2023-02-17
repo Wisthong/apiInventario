@@ -4,26 +4,32 @@ const {
   getHosts,
   getHost,
   deleteHost,
+  updateHost,
 } = require("../controllers/devices");
 const {
   validatorDevice,
   validatorGetDevice,
 } = require("../validators/devices");
 const { checkAuth } = require("../middlewares/authSesion");
+const { checkRol } = require("../middlewares/rol");
 const router = Router();
 
-router.post("/", [checkAuth, validatorDevice], createHost);
+router.post("/", [checkAuth, checkRol(["admin"]), validatorDevice], createHost);
 
-router.put("/", [checkAuth, validatorDevice], createHost);
+router.get("/", getHosts);
 
-router.get("/", [checkAuth], getHosts);
+router.get("/:id", [validatorGetDevice], getHost);
 
-router.get("/:id", [checkAuth, validatorGetDevice], getHost);
+router.delete(
+  "/:id",
+  [checkAuth, checkRol(["admin"]), validatorGetDevice],
+  deleteHost
+);
 
-router.delete("/:id", [checkAuth, validatorGetDevice], deleteHost);
-
-// router.post("/login", [validatorLogin], login);
-
-// router.get("/renew", [checkAuth], renewSesion);
+router.put(
+  "/:id",
+  [checkAuth, checkRol(["admin"]), validatorDevice, validatorGetDevice],
+  updateHost
+);
 
 module.exports = router;

@@ -30,6 +30,7 @@ const DeviceSchema = Schema(
     },
     fecha_baja: {
       type: String,
+      required: true,
     },
     precio: {
       type: Number,

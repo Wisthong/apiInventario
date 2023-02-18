@@ -25,6 +25,7 @@ const validatorDevice = [
     .exists()
     .notEmpty()
     .isLength({ min: 5 }),
+  check("fecha_baja", "Debes ingresar la fecha de ingreso"),
   check("precio", "Debes ingresar el precio del dispositivo")
     .exists()
     .notEmpty()

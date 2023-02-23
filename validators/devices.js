@@ -4,6 +4,19 @@ const { validateResult } = require("../helpers/handleValidator");
 //TODO: http://localhost:3001/api/devices
 
 const validatorDevice = [
+  check("providers", "Debes ingresar el proveedor del dispositivo")
+    .exists()
+    .notEmpty()
+    .isLength({ min: 5 }),
+  check("co", "Debes ingresar el centro de operacion").exists().notEmpty(),
+  check("area", "Debes ingresar el area / departamento").exists().notEmpty(),
+  check("numserie", "Debes ingresar el numero de serie")
+    .exists()
+    .notEmpty()
+    .isLength({ min: 9 }),
+  check("discoduro", "Debes ingresar el disco duro").exists({
+    checkNull: false,
+  }),
   check("device", "Debes ingresar el nombre del dispositivo")
     .exists()
     .notEmpty()
@@ -12,40 +25,44 @@ const validatorDevice = [
     .exists()
     .notEmpty()
     .isLength({ min: 5 }),
-  check("so", "Debes ingresar el sistema operativo y su versión")
-    .exists()
-    .notEmpty()
-    .isLength({ min: 5 }),
-  check("ip", "Debes ingresar la IP").exists().notEmpty().isLength({ min: 5 }),
-  check("antivirus", "Debes ingresar el antivirus")
-    .exists()
-    .notEmpty()
-    .isLength({ min: 5 }),
+  check("so", "Debes ingresar el sistema operativo y su versión").exists({
+    checkNull: false,
+  }),
+  check("ip", "Debes ingresar la IP").exists().notEmpty().isLength({ min: 11 }),
+  check("antivirus", "Debes ingresar el antivirus").exists({
+    checkNull: false,
+  }),
   check("fecha_ingreso", "Debes ingresar la fecha de ingreso")
     .exists()
     .notEmpty()
     .isLength({ min: 5 }),
-  check("fecha_baja", "Debes ingresar la fecha de ingreso"),
+  check("fecha_baja", "Debes ingresar la fecha de ingreso").exists({
+    checkNull: false,
+  }),
+  check("estado", "Debes ingresar el estado del dispositivo")
+    .exists()
+    .notEmpty(),
   check("precio", "Debes ingresar el precio del dispositivo")
     .exists()
     .notEmpty()
     .isNumeric(),
-  check("licencias", "Debes ingresar las licencias del dispositivo")
-    .exists()
-    .notEmpty()
-    .isLength({ min: 5 }),
+  check("licencias", "Debes ingresar las licencias del dispositivo").exists({
+    checkNull: false,
+  }),
   check("ram", "Debes ingresar la cantidad de memoria RAM del dispositivo")
     .exists()
     .notEmpty()
-    .isLength({ min: 5 }),
+    .isLength({ min: 1 }),
   check("descripcion", "Debes ingresar la descripción del dispositivo")
     .exists()
     .notEmpty()
     .isLength({ min: 5 }),
-  check("procesador", "Debes ingresar el nombre del procesador del dispositivo")
-    .exists()
-    .notEmpty()
-    .isLength({ min: 3 }),
+  check(
+    "procesador",
+    "Debes ingresar el nombre del procesador del dispositivo"
+  ).exists({
+    checkNull: false,
+  }),
 
   (req, res, next) => {
     validateResult(req, res, next);

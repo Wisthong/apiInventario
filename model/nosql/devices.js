@@ -36,6 +36,10 @@ const DeviceSchema = Schema(
       type: String,
       required: true,
     },
+    numserie: {
+      type: String,
+      required: true,
+    },
     fecha_ingreso: {
       type: String,
       required: true,

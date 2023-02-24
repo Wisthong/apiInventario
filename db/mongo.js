@@ -1,21 +1,21 @@
 const { connect, set } = require("mongoose");
 
 const connectionDB = () => {
-    connect(
-        'mongodb://127.0.0.1:27017/inventarioDB',
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        },
-        (err) => {
-            if (!err) {
-                console.log("***Conexion exitosa***");
-            } else {
-                throw new Error("***Error de conexion***");
-            }
-        }
-    );
+  connect(
+    process.env.URI,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
+    (err) => {
+      if (!err) {
+        console.log("***Conexion exitosa***");
+      } else {
+        throw new Error("***Error de conexion***");
+      }
+    }
+  );
 };
 
-set('strictQuery', false);
+set("strictQuery", false);
 module.exports = { connectionDB };

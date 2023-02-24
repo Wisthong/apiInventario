@@ -2,44 +2,17 @@ const { Schema, model } = require("mongoose");
 
 const DeviceSchema = Schema(
   {
-    device: {
-      type: String,
-      required: true,
-    },
-    hostname: {
-      type: String,
-      // unique: true,
-      required: true,
-    },
-    so: {
-      type: String,
-      required: true,
-    },
     ip: {
       type: String,
       required: true,
-      // unique: true,
+      unique: true,
     },
-    antivirus: {
+    hostname: {
       type: String,
+      unique: true,
       required: true,
     },
-    fecha_ingreso: {
-      type: String,
-      required: true,
-    },
-    fecha_baja: {
-      type: String,
-    },
-    estado: {
-      type: ["activo", "inactivo", "mantenimiento"],
-      default: ["activo"],
-    },
-    licencias: {
-      type: String,
-      required: true,
-    },
-    ram: {
+    device: {
       type: String,
       required: true,
     },
@@ -47,9 +20,55 @@ const DeviceSchema = Schema(
       type: String,
       required: true,
     },
-    procesador: {
+    area: {
       type: String,
       required: true,
+    },
+    co: {
+      type: String,
+      required: true,
+    },
+    precio: {
+      type: Number,
+      required: true,
+    },
+    providers: {
+      type: String,
+      required: true,
+    },
+    numserie: {
+      type: String,
+      required: true,
+    },
+    fecha_ingreso: {
+      type: String,
+      required: true,
+    },
+    estado: {
+      type: String,
+      required: true,
+    },
+    fecha_baja: {
+      type: String,
+    },
+    discoduro: {
+      type: String,
+    },
+    ram: {
+      type: Number,
+    },
+    procesador: {
+      type: String,
+    },
+    so: {
+      type: String,
+    },
+    antivirus: {
+      type: String,
+    },
+
+    licencias: {
+      type: String,
     },
   },
   {

@@ -11,7 +11,7 @@ const signToken = async (user) => {
     },
     process.env.SECRET,
     {
-      expiresIn: "5h",
+      expiresIn: "24h",
     }
   );
 };

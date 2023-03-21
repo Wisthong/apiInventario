@@ -7,13 +7,13 @@ const validatorDevice = [
   check("providers", "Debes ingresar el proveedor del dispositivo")
     .exists()
     .notEmpty()
-    .isLength({ min: 5 }),
+    .isLength({ min: 2 }),
   check("co", "Debes ingresar el centro de operacion").exists().notEmpty(),
   check("area", "Debes ingresar el area / departamento").exists().notEmpty(),
   check("numserie", "Debes ingresar el numero de serie")
     .exists()
     .notEmpty()
-    .isLength({ min: 9 }),
+    .isLength({ min: 5 }),
   check("discoduro", "Debes ingresar el disco duro").exists({
     checkNull: false,
   }),

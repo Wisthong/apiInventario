@@ -99,8 +99,9 @@ const deleteHost = async (req = request, res = response) => {
         401
       );
     }
-
-    const data = await deviceModel.deleteOne({ _id: id });
+    //TODO: DELETE para usar mongoosedelete
+    const data = await deviceModel.delete({ _id: id });
+    // const data = await deviceModel.deleteOne({ _id: id });
 
     res.send({
       token,
@@ -123,6 +124,34 @@ const updateHost = async (req = request, res = response) => {
       return handleErrorResponse(
         res,
         "No existe este id en nuestro sistema ",
+        401
+      );
+    }
+
+    const { hostname, ip } = body;
+
+    const verifyIp = await deviceModel.findOne({
+      ip: { $eq: ip },
+      _id: { $ne: id },
+    });
+    // const verifyIp = await deviceModel.findOne({ ip });
+    if (verifyIp) {
+      return handleErrorResponse(
+        res,
+        "La IP ya esta asignada a otro dispositivo",
+        401
+      );
+    }
+
+    const verifyHostName = await deviceModel.findOne({
+      hostname: { $eq: hostname },
+      _id: { $ne: id },
+    });
+    // const verifyHostName = await deviceModel.findOne({ hostname });
+    if (verifyHostName) {
+      return handleErrorResponse(
+        res,
+        "La Hostname ya esta asignada a otro dispositivo",
         401
       );
     }

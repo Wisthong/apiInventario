@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const mongoose_delete = require("mongoose-delete");
 
 const DeviceSchema = Schema(
   {
@@ -77,4 +78,5 @@ const DeviceSchema = Schema(
   }
 );
 
+DeviceSchema.plugin(mongoose_delete, { overrideMethods: "all" });
 module.exports = model("devices", DeviceSchema);

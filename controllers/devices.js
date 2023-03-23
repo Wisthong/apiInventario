@@ -9,9 +9,11 @@ const { signToken } = require("../helpers/handleJwt");
 
 const createHost = async (req = request, res = response) => {
   try {
-    const body = matchedData(req);
+    let body = matchedData(req);
     const { user } = req;
-    let { ip, hostname } = body;
+    const { ip, hostname } = body;
+    const usuario = user._id;
+    body = { ...body, usuario };
 
     const token = await signToken(user);
     const verifyIp = await deviceModel.findOne({ ip });
@@ -44,7 +46,9 @@ const createHost = async (req = request, res = response) => {
 
 const getHosts = async (req = request, res = response) => {
   try {
-    const data = await deviceModel.find();
+    // const data = await deviceModel.find();
+    const data = await deviceModel.findAllData();
+    // data.set("userAdmin", undefined, { strict: false });
     if (!data) {
       return handleErrorResponse(
         res,
@@ -66,7 +70,8 @@ const getHost = async (req = request, res = response) => {
   try {
     const { id } = matchedData(req);
 
-    const data = await deviceModel.findOne({ _id: id });
+    // const data = await deviceModel.findOne({ _id: id });
+    const data = await deviceModel.findOneData(id);
     if (!data) {
       return handleErrorResponse(
         res,
@@ -115,7 +120,7 @@ const deleteHost = async (req = request, res = response) => {
 
 const updateHost = async (req = request, res = response) => {
   try {
-    const { id, ...body } = matchedData(req);
+    let { id, ...body } = matchedData(req);
     const { user } = req;
     const token = await signToken(user);
 
@@ -156,6 +161,8 @@ const updateHost = async (req = request, res = response) => {
       );
     }
 
+    const usuario = user._id;
+    body = { ...body, usuario };
     const data = await deviceModel.findByIdAndUpdate(id, body);
 
     res.send({

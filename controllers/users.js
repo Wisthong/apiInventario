@@ -37,7 +37,7 @@ const login = async (req = request, res = response) => {
       message: "Inicio de sesión exitoso",
     });
   } catch (error) {
-    handleHttpError(error);
+    handleHttpError(res, error);
   }
 };
 

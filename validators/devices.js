@@ -7,13 +7,13 @@ const validatorDevice = [
   check("providers", "Debes ingresar el proveedor del dispositivo")
     .exists()
     .notEmpty()
-    .isLength({ min: 5 }),
+    .isLength({ min: 2 }),
   check("co", "Debes ingresar el centro de operacion").exists().notEmpty(),
   check("area", "Debes ingresar el area / departamento").exists().notEmpty(),
   check("numserie", "Debes ingresar el numero de serie")
     .exists()
     .notEmpty()
-    .isLength({ min: 9 }),
+    .isLength({ min: 5 }),
   check("discoduro", "Debes ingresar el disco duro").exists({
     checkNull: false,
   }),
@@ -21,10 +21,10 @@ const validatorDevice = [
     .exists()
     .notEmpty()
     .isLength({ min: 1 }),
-  check("hostname", "Debes ingresar el hostname")
+  check("hostname", "Debes ingresar el hostname, al menos 4 caracteres")
     .exists()
     .notEmpty()
-    .isLength({ min: 5 }),
+    .isLength({ min: 4 }),
   check("so", "Debes ingresar el sistema operativo y su versión").exists({
     checkNull: false,
   }),
@@ -53,6 +53,10 @@ const validatorDevice = [
     .exists()
     .notEmpty()
     .isLength({ min: 1 }),
+  // check("usuario", "Debes ingresar el id del Usuario")
+  //   .exists()
+  //   .notEmpty()
+  // .isMongoId(),
   check("descripcion", "Debes ingresar la descripción del dispositivo")
     .exists()
     .notEmpty()

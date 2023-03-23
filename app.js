@@ -7,11 +7,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const port = process.env.PORT;
 connectionDB();
 
-app.listen(port, () => {
-  console.log(`http://localhost:${port}/api/`);
+app.listen(process.env.PORT, () => {
+  console.log(`http://${process.env.IP}:${process.env.PORT}/api/`);
 });
 
 app.use("/api", require("./routes"));

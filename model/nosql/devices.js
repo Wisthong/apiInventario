@@ -1,4 +1,5 @@
 const { Schema, model, Types } = require("mongoose");
+
 const mongoose_delete = require("mongoose-delete");
 
 const DeviceSchema = Schema(
@@ -19,7 +20,7 @@ const DeviceSchema = Schema(
     },
     descripcion: {
       type: String,
-      required: true,
+      // required: true,
     },
     area: {
       type: String,
@@ -35,11 +36,11 @@ const DeviceSchema = Schema(
     },
     providers: {
       type: String,
-      required: true,
+      // required: true,
     },
     numserie: {
       type: String,
-      required: true,
+      // required: true,
     },
     fecha_ingreso: {
       type: String,
@@ -102,7 +103,7 @@ DeviceSchema.statics.findOneData = function (id) {
   const joinData = this.aggregate([
     {
       $match: {
-        _id: Types.ObjectId(id),
+        _id: new Types.ObjectId(id),
       },
     },
     {
@@ -114,7 +115,7 @@ DeviceSchema.statics.findOneData = function (id) {
       },
     },
     {
-      $unwind: "$userAdmin",
+      $unwind: "$usuario",
     },
   ]);
   return joinData;

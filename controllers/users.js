@@ -57,7 +57,6 @@ const register = async (req = request, res = response) => {
     const data = await userModel.create(dataUser);
     const token = await signToken(data);
 
-    // console.log(dataUser);
     res.send({
       ok: true,
       token,

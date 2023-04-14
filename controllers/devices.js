@@ -69,16 +69,17 @@ const getHosts = async (req = request, res = response) => {
 const getHost = async (req = request, res = response) => {
   try {
     const { id } = matchedData(req);
-
+    console.log(id);
     // const data = await deviceModel.findOne({ _id: id });
     const data = await deviceModel.findOneData(id);
-    if (!data) {
-      return handleErrorResponse(
-        res,
-        "No existe este id en nuestro sistema ",
-        401
-      );
-    }
+    // console.log(data);
+    // if (!data || data.length < 1) {
+    //   return handleErrorResponse(
+    //     res,
+    //     "No existe este id en nuestro sistema ",
+    //     401
+    //   );
+    // }
 
     res.send({
       data,
@@ -86,6 +87,7 @@ const getHost = async (req = request, res = response) => {
       message: "Has obtenido el dispositivo",
     });
   } catch (error) {
+    console.log(error);
     handleErrorResponse(res, error);
   }
 };

@@ -21,7 +21,7 @@ const UserSchema = Schema(
       // select: false,
     },
     role: {
-      type: ["user", "admin"],
+      type: ["user", "admin", "master"],
       default: ["user"],
     },
   },

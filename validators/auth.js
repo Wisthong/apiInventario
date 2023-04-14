@@ -15,7 +15,11 @@ const validatorLogin = [
 const validatorRegister = [
   check("name", "Debes ingresar el nombre").exists().notEmpty(),
   check("lastname", "Debes ingresar el apellido").exists().notEmpty(),
-  check("email", "Debes ingresar email").exists().notEmpty().isEmail(),
+  check("email", "Debes ingresar email")
+    .exists()
+    .notEmpty()
+    .isEmail()
+    .toLowerCase(),
   check("password", "Debes ingresar contraseña de minimo 8 caracteres")
     .exists()
     .notEmpty()

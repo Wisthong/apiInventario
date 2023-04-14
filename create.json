@@ -1,15 +1,13 @@
 {
-    "device":"Laptop Hp",
-    "hostname":"Developer Dell z",
-    "so":"Windows 97",
-    "ip":"192.168.120.11",
-    "antivirus":"Avira",
-    "fecha_ingreso":"2022/08/15",
-    "fecha_baja":"2025/09/04",
-    "ram":"12 gb",
-    "descripcion":"Laptop",
-    "procesador":"AMD",
-    "licencias":"Office"
-  }
-
-  
+  "device": "Laptop Hp",
+  "hostname": "Developer Dell z",
+  "so": "Windows 97",
+  "ip": "192.168.120.11",
+  "antivirus": "Avira",
+  "fecha_ingreso": "2022/08/15",
+  "fecha_baja": "2025/09/04",
+  "ram": "12 gb",
+  "descripcion": "Laptop",
+  "procesador": "AMD",
+  "licencias": "Office"
+}

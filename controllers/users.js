@@ -68,6 +68,52 @@ const register = async (req = request, res = response) => {
   }
 };
 
+const getUsers = async (req = request, res = response) => {
+  try {
+    const data = await userModel.find({});
+    // data.set("userAdmin", undefined, { strict: false });
+    if (!data) {
+      return handleErrorResponse(
+        res,
+        "No se pudo obtener la lista de users",
+        401
+      );
+    }
+    res.send({
+      data,
+      ok: true,
+      message: "Has obtenido la lista de los users",
+    });
+  } catch (error) {
+    handleErrorResponse(res, error);
+  }
+};
+
+const getUser = async (req = request, res = response) => {
+  try {
+    const { id } = matchedData(req);
+    console.log(id);
+    const data = await userModel.findOne({ _id: id });
+    // console.log(data);
+    // if (!data || data.length < 1) {
+    //   return handleErrorResponse(
+    //     res,
+    //     "No existe este id en nuestro sistema ",
+    //     401
+    //   );
+    // }
+
+    res.send({
+      data,
+      ok: true,
+      message: "Has obtenido el dispositivo",
+    });
+  } catch (error) {
+    console.log(error);
+    handleErrorResponse(res, error);
+  }
+};
+
 const renewSesion = async (req = request, res = response) => {
   try {
     const { user } = req;
@@ -82,4 +128,4 @@ const renewSesion = async (req = request, res = response) => {
   }
 };
 
-module.exports = { login, register, renewSesion };
+module.exports = { login, register, renewSesion, getUser, getUsers };

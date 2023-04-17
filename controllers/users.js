@@ -92,7 +92,6 @@ const getUsers = async (req = request, res = response) => {
 const getUser = async (req = request, res = response) => {
   try {
     const { id } = matchedData(req);
-    console.log(id);
     const data = await userModel.findOne({ _id: id });
     // console.log(data);
     // if (!data || data.length < 1) {
@@ -128,4 +127,87 @@ const renewSesion = async (req = request, res = response) => {
   }
 };
 
-module.exports = { login, register, renewSesion, getUser, getUsers };
+const updateUser = async (req = request, res = response) => {
+  try {
+    let { id, ...body } = matchedData(req);
+    const { user } = req;
+    const token = await signToken(user);
+
+    const verifyUserId = await userModel.findOne({ _id: id });
+    if (!verifyUserId) {
+      return handleErrorResponse(
+        res,
+        "No existe este id en nuestro sistema ",
+        401
+      );
+    }
+
+    const { email } = body;
+
+    const verifyEmail = await userModel.findOne({
+      email: { $eq: email },
+      _id: { $ne: id },
+    });
+
+    if (verifyEmail) {
+      return handleErrorResponse(
+        res,
+        "El email ya esta asignada a otro usuario",
+        401
+      );
+    }
+
+    const usuario = user._id;
+    // console.log(usuario);
+    // body = { ...body, usuario };
+    // console.log(body);
+    const data = await userModel.findByIdAndUpdate(id, body);
+
+    res.send({
+      token,
+      ok: true,
+      message: "Has actualizado el usuario",
+    });
+  } catch (error) {
+    handleErrorResponse(res, error);
+  }
+};
+
+const deleteUser = async (req = request, res = response) => {
+  try {
+    const { id } = matchedData(req);
+    const { user } = req;
+
+    const token = await signToken(user);
+    const verifyHost = await userModel.findOne({ _id: id });
+    if (!verifyHost) {
+      return handleErrorResponse(
+        res,
+        "No existe este id en nuestro sistema ",
+        401
+      );
+    }
+    //TODO: DELETE para usar mongoosedelete
+    const data = await userModel.delete({ _id: id });
+    // const data = await deviceModel.deleteOne({ _id: id });
+
+    res.send({
+      token,
+      ok: true,
+      message: "Has elimanado el dispositivo",
+    });
+  } catch (error) {
+    console.log(error);
+    handleErrorResponse(res, error);
+  }
+};
+
+module.exports = {
+  login,
+  register,
+  renewSesion,
+  getUser,
+  getUsers,
+  updateUser,
+  deleteUser,
+};

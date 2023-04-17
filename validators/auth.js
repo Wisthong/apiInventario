@@ -15,6 +15,7 @@ const validatorLogin = [
 const validatorRegister = [
   check("name", "Debes ingresar el nombre").exists().notEmpty(),
   check("lastname", "Debes ingresar el apellido").exists().notEmpty(),
+  check("role", "Debes ingresar el role").default("user"),
   check("email", "Debes ingresar email")
     .exists()
     .notEmpty()
@@ -23,10 +24,17 @@ const validatorRegister = [
   check("password", "Debes ingresar contraseña de minimo 8 caracteres")
     .exists()
     .notEmpty()
-    .isLength({ min: 5, max: 50 }),
+    .isLength({ min: 5, max: 70 }),
   (req, res, next) => {
     validateResult(req, res, next);
   },
 ];
 
-module.exports = { validatorLogin, validatorRegister };
+const validatorUserId = [
+  check("id", "Debes ingresar un id valido").exists().notEmpty().isMongoId(),
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
+module.exports = { validatorLogin, validatorRegister, validatorUserId };

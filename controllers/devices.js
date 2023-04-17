@@ -69,7 +69,7 @@ const getHosts = async (req = request, res = response) => {
 const getHost = async (req = request, res = response) => {
   try {
     const { id } = matchedData(req);
-    console.log(id);
+    // console.log(id);
     // const data = await deviceModel.findOne({ _id: id });
     const data = await deviceModel.findOneData(id);
     // console.log(data);
@@ -87,7 +87,7 @@ const getHost = async (req = request, res = response) => {
       message: "Has obtenido el dispositivo",
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     handleErrorResponse(res, error);
   }
 };

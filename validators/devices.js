@@ -4,16 +4,20 @@ const { validateResult } = require("../helpers/handleValidator");
 //TODO: http://localhost:3001/api/devices
 
 const validatorDevice = [
-  check("providers", "Debes ingresar el proveedor del dispositivo")
-    .exists()
-    .notEmpty()
-    .isLength({ min: 2 }),
+  check("providers", "Debes ingresar el proveedor del dispositivo").exists({
+    checkNull: false,
+  }),
+  // .exists()
+  // .notEmpty()
+  // .isLength({ min: 2 }),
   check("co", "Debes ingresar el centro de operacion").exists().notEmpty(),
   check("area", "Debes ingresar el area / departamento").exists().notEmpty(),
-  check("numserie", "Debes ingresar el numero de serie")
-    .exists()
-    .notEmpty()
-    .isLength({ min: 5 }),
+  check("numserie", "Debes ingresar el numero de serie").exists({
+    checkNull: false,
+  }),
+  // .exists()
+  // .notEmpty()
+  // .isLength({ min: 5 }),
   check("discoduro", "Debes ingresar el disco duro").exists({
     checkNull: false,
   }),
@@ -57,10 +61,12 @@ const validatorDevice = [
   //   .exists()
   //   .notEmpty()
   // .isMongoId(),
-  check("descripcion", "Debes ingresar la descripción del dispositivo")
-    .exists()
-    .notEmpty()
-    .isLength({ min: 5 }),
+  check("descripcion", "Debes ingresar la descripción del dispositivo").exists({
+    checkNull: false,
+  }),
+  // .exists()
+  // .notEmpty()
+  // .isLength({ min: 5 }),
   check(
     "procesador",
     "Debes ingresar el nombre del procesador del dispositivo"

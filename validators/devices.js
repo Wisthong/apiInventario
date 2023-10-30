@@ -4,9 +4,11 @@ const { validateResult } = require("../helpers/handleValidator");
 //TODO: http://localhost:3001/api/devices
 
 const validatorDevice = [
-  check("providers", "Debes ingresar el proveedor del dispositivo").exists({
-    checkNull: false,
-  }),
+  check("providers", "Debes ingresar el proveedor del dispositivo")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
   // .exists()
   // .notEmpty()
   // .isLength({ min: 2 }),
@@ -28,6 +30,7 @@ const validatorDevice = [
   check("hostname", "Debes ingresar el hostname, al menos 4 caracteres")
     .exists()
     .notEmpty()
+    .toLowerCase()
     .isLength({ min: 4 }),
   check("so", "Debes ingresar el sistema operativo y su versión").exists({
     checkNull: false,

@@ -72,12 +72,11 @@ const validatorDevice = [
   // .exists()
   // .notEmpty()
   // .isLength({ min: 5 }),
-  check(
-    "procesador",
-    "Debes ingresar el nombre del procesador del dispositivo"
-  ).exists({
-    checkNull: false,
-  }),
+  check("procesador", "Debes ingresar el nombre del procesador del dispositivo")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
 
   (req, res, next) => {
     validateResult(req, res, next);

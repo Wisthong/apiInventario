@@ -68,7 +68,7 @@ const validatorDevice = [
   // .isMongoId(),
   check("descripcion", "Debes ingresar la descripción del dispositivo").exists({
     checkNull: false,
-  }),
+  }).toUpperCase(),
   // .exists()
   // .notEmpty()
   // .isLength({ min: 5 }),

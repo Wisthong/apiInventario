@@ -34,9 +34,11 @@ const validatorDevice = [
     .notEmpty()
     .toLowerCase()
     .isLength({ min: 4 }),
-  check("so", "Debes ingresar el sistema operativo y su versión").exists({
-    checkNull: false,
-  }),
+  check("so", "Debes ingresar el sistema operativo y su versión")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
   check("ip", "Debes ingresar la IP").exists().notEmpty().isLength({ min: 11 }),
   check("antivirus", "Debes ingresar el antivirus").exists({
     checkNull: false,
@@ -66,9 +68,11 @@ const validatorDevice = [
   //   .exists()
   //   .notEmpty()
   // .isMongoId(),
-  check("descripcion", "Debes ingresar la descripción del dispositivo").exists({
-    checkNull: false,
-  }).toUpperCase(),
+  check("descripcion", "Debes ingresar la descripción del dispositivo")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
   // .exists()
   // .notEmpty()
   // .isLength({ min: 5 }),

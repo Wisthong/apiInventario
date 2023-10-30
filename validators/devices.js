@@ -14,9 +14,11 @@ const validatorDevice = [
   // .isLength({ min: 2 }),
   check("co", "Debes ingresar el centro de operacion").exists().notEmpty(),
   check("area", "Debes ingresar el area / departamento").exists().notEmpty(),
-  check("numserie", "Debes ingresar el numero de serie").exists({
-    checkNull: false,
-  }),
+  check("numserie", "Debes ingresar el numero de serie")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
   // .exists()
   // .notEmpty()
   // .isLength({ min: 5 }),

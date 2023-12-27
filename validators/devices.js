@@ -19,9 +19,16 @@ const validatorDevice = [
       checkNull: false,
     })
     .toUpperCase(),
-  // .exists()
-  // .notEmpty()
-  // .isLength({ min: 5 }),
+  check("responsable", "Debes ingresar el responsable del equipo")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
+  check("wifi", "Debes ingresar la direccion ip del wifi")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
   check("discoduro", "Debes ingresar el disco duro").exists({
     checkNull: false,
   }),

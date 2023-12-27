@@ -68,6 +68,12 @@ const DeviceSchema = Schema(
     antivirus: {
       type: String,
     },
+    wifi: {
+      type: String,
+    },
+    responsable: {
+      type: String,
+    },
 
     licencias: {
       type: String,

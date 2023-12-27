@@ -19,16 +19,16 @@ const validatorDevice = [
       checkNull: false,
     })
     .toUpperCase(),
-  check("responsable", "Debes ingresar el responsable del equipo")
-    .exists({
-      checkNull: true,
-    })
-    .toUpperCase(),
-  check("wifi", "Debes ingresar la direccion ip del wifi")
-    .exists({
-      checkNull: true,
-    })
-    .toUpperCase(),
+  // check("responsable", "Debes ingresar el responsable del equipo")
+  //   .exists({
+  //     checkNull: true,
+  //   })
+  //   .toUpperCase(),
+  // check("wifi", "Debes ingresar la direccion ip del wifi")
+  //   .exists({
+  //     checkNull: true,
+  //   })
+  //   .toUpperCase(),
   check("discoduro", "Debes ingresar el disco duro").exists({
     checkNull: false,
   }),

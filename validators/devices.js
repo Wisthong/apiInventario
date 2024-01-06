@@ -4,20 +4,31 @@ const { validateResult } = require("../helpers/handleValidator");
 //TODO: http://localhost:3001/api/devices
 
 const validatorDevice = [
-  check("providers", "Debes ingresar el proveedor del dispositivo").exists({
-    checkNull: false,
-  }),
+  check("providers", "Debes ingresar el proveedor del dispositivo")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
   // .exists()
   // .notEmpty()
   // .isLength({ min: 2 }),
   check("co", "Debes ingresar el centro de operacion").exists().notEmpty(),
   check("area", "Debes ingresar el area / departamento").exists().notEmpty(),
-  check("numserie", "Debes ingresar el numero de serie").exists({
-    checkNull: false,
-  }),
-  // .exists()
-  // .notEmpty()
-  // .isLength({ min: 5 }),
+  check("numserie", "Debes ingresar el numero de serie")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
+  check("responsable", "Debes ingresar el responsable del equipo")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
+  check("wifi", "Debes ingresar la direccion ip del wifi")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
   check("discoduro", "Debes ingresar el disco duro").exists({
     checkNull: false,
   }),
@@ -28,10 +39,13 @@ const validatorDevice = [
   check("hostname", "Debes ingresar el hostname, al menos 4 caracteres")
     .exists()
     .notEmpty()
+    .toLowerCase()
     .isLength({ min: 4 }),
-  check("so", "Debes ingresar el sistema operativo y su versión").exists({
-    checkNull: false,
-  }),
+  check("so", "Debes ingresar el sistema operativo y su versión")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
   check("ip", "Debes ingresar la IP").exists().notEmpty().isLength({ min: 11 }),
   check("antivirus", "Debes ingresar el antivirus").exists({
     checkNull: false,
@@ -61,18 +75,19 @@ const validatorDevice = [
   //   .exists()
   //   .notEmpty()
   // .isMongoId(),
-  check("descripcion", "Debes ingresar la descripción del dispositivo").exists({
-    checkNull: false,
-  }),
+  check("descripcion", "Debes ingresar la descripción del dispositivo")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
   // .exists()
   // .notEmpty()
   // .isLength({ min: 5 }),
-  check(
-    "procesador",
-    "Debes ingresar el nombre del procesador del dispositivo"
-  ).exists({
-    checkNull: false,
-  }),
+  check("procesador", "Debes ingresar el nombre del procesador del dispositivo")
+    .exists({
+      checkNull: false,
+    })
+    .toUpperCase(),
 
   (req, res, next) => {
     validateResult(req, res, next);
